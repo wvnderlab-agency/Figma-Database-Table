@@ -6,6 +6,7 @@ table
       th Type
       th Index
       th Nullable
+      th Description
       th
   tbody
     field-row(
@@ -22,7 +23,7 @@ table
 </template>
 
 <script>
-import FieldRow from "./field-row"
+import FieldRow from "./field-row";
 
 export default {
   components: {
@@ -31,51 +32,48 @@ export default {
   props: {
     fields: Array,
   },
-  emits: [
-    "remove",
-    "move",
-  ],
+  emits: ["remove", "move"],
   data() {
     return {
       row: {
         old: null,
         new: null,
       },
-    }
+    };
   },
   methods: {
     dragStart(event) {
-      this.row.old = event.currentTarget.dataset.index
+      this.row.old = event.currentTarget.dataset.index;
     },
     dragEnd() {
-      this.$emit("move", this.row)
+      this.$emit("move", this.row);
     },
     dragOver(event) {
-      let overRow = event.currentTarget
+      let overRow = event.currentTarget;
 
-      this.row.new = overRow.dataset.index
+      this.row.new = overRow.dataset.index;
 
-      let newIndex = this.row.new
-      let prevIndex = this.row.old
+      let newIndex = this.row.new;
+      let prevIndex = this.row.old;
 
-      let targetClass = ""
+      let targetClass = "";
       if (newIndex == prevIndex) {
-        return
+        return;
       }
 
       if (newIndex < prevIndex) {
-        targetClass = "has-dragged-top"
+        targetClass = "has-dragged-top";
       } else {
-        targetClass = "has-dragged-bottom"
+        targetClass = "has-dragged-bottom";
       }
 
-      overRow.classList.add(targetClass)
+      overRow.classList.add(targetClass);
     },
     dragLeave(event) {
-      let overRow = event.currentTarget
+      let overRow = event.currentTarget;
 
-      overRow.classList.remove("has-dragged-bottom", "has-dragged-top")
+      overRow.classList.remove("has-dragged-bottom", "has-dragged-top");
     },
   },
-}
+};
 </script>

@@ -4,8 +4,8 @@ fields-table(:fields="fields" @remove="remove" @move="move")
 </template>
 
 <script>
-import Controls from "./controls"
-import FieldsTable from "./fields-table"
+import Controls from "./controls";
+import FieldsTable from "./fields-table";
 
 export default {
   components: {
@@ -20,7 +20,7 @@ export default {
       fields: this.columns,
       row: null,
       changedRow: null,
-    }
+    };
   },
   methods: {
     newColumn() {
@@ -29,23 +29,27 @@ export default {
         type: "int",
         keyType: "normal",
         nullable: false,
-      })
+        description: "",
+      });
     },
     save() {
-      parent.postMessage({
-        pluginMessage: JSON.stringify({
-          action: "edit",
-          data: this.fields,
-        }),
-      }, "*")
+      parent.postMessage(
+        {
+          pluginMessage: JSON.stringify({
+            action: "edit",
+            data: this.fields,
+          }),
+        },
+        "*"
+      );
     },
     remove(index) {
-      this.fields.splice(index, 1)
+      this.fields.splice(index, 1);
     },
     move(row) {
-      let currentColumn = this.fields.splice(row.old, 1)
-      this.fields.splice(row.new, 0, currentColumn[0])
+      let currentColumn = this.fields.splice(row.old, 1);
+      this.fields.splice(row.new, 0, currentColumn[0]);
     },
   },
-}
+};
 </script>
